@@ -1,0 +1,63 @@
+---
+layout: base
+title: Home
+---
+
+<div class="container">
+  <section class="home-hero">
+    <h1>Josh Frye</h1>
+    <p>{{ site.description }}</p>
+  </section>
+
+  <section class="section">
+    <h2>Recent Writing</h2>
+    <div class="post-list">
+      {% for post in site.posts limit:3 %}
+        <article class="post-item">
+          <span class="post-date">{{ post.date | date: "%B %d, %Y" }}</span>
+          <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+          <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+        </article>
+      {% endfor %}
+    </div>
+    <div style="margin-top: var(--spacing-lg);">
+      <a href="{{ '/blog/' | relative_url }}" style="font-weight: 600;">View all posts →</a>
+    </div>
+  </section>
+
+  {% assign tils = site.til | sort: 'date' | reverse %}
+  {% if tils.size > 0 %}
+  <section class="section">
+    <h2>Today I Learned</h2>
+    <div class="post-list">
+      {% for til in tils limit:3 %}
+        <article class="post-item">
+          <span class="post-date">{{ til.date | date: "%B %d, %Y" }}</span>
+          <h3><a href="{{ til.url | relative_url }}">{{ til.title }}</a></h3>
+        </article>
+      {% endfor %}
+    </div>
+    <div style="margin-top: var(--spacing-lg);">
+      <a href="{{ '/til/' | relative_url }}" style="font-weight: 600;">View all TILs →</a>
+    </div>
+  </section>
+  {% endif %}
+
+  {% assign tweets = site.tweets | sort: 'date' | reverse %}
+  {% if tweets.size > 0 %}
+  <section class="section">
+    <h2>Tweets I'd send if I had a Twitter account</h2>
+    <div class="post-list">
+      {% for tweet in tweets limit:3 %}
+        <article class="post-item">
+          <span class="post-date">{{ tweet.date | date: "%B %d, %Y" }}</span>
+          <h3><a href="{{ tweet.url | relative_url }}">{{ tweet.title }}</a></h3>
+        </article>
+      {% endfor %}
+    </div>
+    <div style="margin-top: var(--spacing-lg);">
+      <a href="{{ '/tweets/' | relative_url }}" style="font-weight: 600;">View all tweets →</a>
+    </div>
+  </section>
+  {% endif %}
+</div>

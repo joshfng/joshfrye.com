@@ -1,0 +1,82 @@
+.home-hero {
+  text-align: left;
+  padding: var(--spacing-xl) 0;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: var(--spacing-xl);
+
+  h1 {
+    font-family: $font-mono;
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--accent-color);
+    
+    &::before { content: "sudo "; opacity: 0.3; }
+  }
+
+  p {
+    font-family: $font-mono;
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    
+    &::before { content: "# "; opacity: 0.5; }
+  }
+}
+
+.section {
+  h2 {
+    font-family: $font-mono;
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border-color);
+      opacity: 0.5;
+    }
+  }
+}
+
+.post-list {
+  .post-item {
+    font-family: $font-mono;
+    border: 1px solid transparent;
+    padding: var(--spacing-md);
+    margin-left: calc(-1 * var(--spacing-md));
+    margin-right: calc(-1 * var(--spacing-md));
+    border-radius: 8px;
+    transition: all $transition-speed;
+
+    &:hover {
+      background: var(--code-bg);
+      border-color: var(--border-color);
+      
+      h3 a { color: var(--accent-color); }
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin: 0 0 4px 0;
+      a { color: var(--text-color); }
+    }
+
+    .post-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    p {
+      font-family: $font-sans; // Body text stays sans for readability
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+  }
+}

@@ -1,0 +1,72 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--nav-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  padding: var(--spacing-sm) 0;
+  font-family: $font-mono;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .nav-brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    &::before {
+      content: "~/";
+      opacity: 0.5;
+    }
+
+    &::after {
+      content: "_";
+      animation: blink 1s step-end infinite;
+    }
+  }
+
+  .nav-links {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+
+    a {
+      color: var(--text-color);
+      font-weight: 400;
+      font-size: 0.85rem;
+      text-transform: lowercase;
+
+      &::before {
+        content: "[";
+        opacity: 0;
+        transition: opacity $transition-speed;
+      }
+      &::after {
+        content: "]";
+        opacity: 0;
+        transition: opacity $transition-speed;
+      }
+
+      &:hover, &.active {
+        color: var(--accent-color);
+        &::before, &::after { opacity: 0.5; }
+      }
+    }
+  }
+}
+
+@keyframes blink {
+  from, to { opacity: 1; }
+  50% { opacity: 0; }
+}

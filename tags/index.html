@@ -1,0 +1,42 @@
+---
+layout: base
+title: Tags
+permalink: /tags/
+---
+<h1 style="margin-top:0; margin-bottom:2rem;">tags</h1>
+
+{% assign all_tags = "" | split: "" %}
+{% for post in site.posts %}
+  {% assign all_tags = all_tags | concat: post.tags %}
+{% endfor %}
+{% for til in site.til %}
+  {% assign all_tags = all_tags | concat: til.tags %}
+{% endfor %}
+{% assign all_tags = all_tags | uniq | sort %}
+
+{% for tag in all_tags %}
+<div class="archive-section" id="{{ tag | slugify }}">
+  <h2 class="archive-heading"><a href="{{ '/tags/' | relative_url }}{{ tag | slugify }}/">#{{ tag }}</a></h2>
+  <ul class="archive-list">
+    {% for post in site.posts %}
+    {% if post.tags contains tag %}
+    <li class="archive-item">
+      <time>{{ post.date | date: "%Y-%m-%d" }}</time>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <span class="badge badge-category">post</span>
+    </li>
+    {% endif %}
+    {% endfor %}
+    {% assign tils = site.til | sort: 'date' | reverse %}
+    {% for til in tils %}
+    {% if til.tags contains tag %}
+    <li class="archive-item">
+      <time>{{ til.date | date: "%Y-%m-%d" }}</time>
+      <a href="{{ til.url | relative_url }}">{{ til.title }}</a>
+      <span class="badge badge-lang">til</span>
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+{% endfor %}

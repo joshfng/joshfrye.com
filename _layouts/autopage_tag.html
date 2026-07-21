@@ -1,0 +1,36 @@
+---
+layout: base
+---
+
+<div class="container section">
+  <header style="margin-bottom: var(--spacing-xl);">
+    <h1>Tag: #{{ page.autopages.display_name }}</h1>
+    <p style="color: var(--text-muted);">Posts tagged with "#{{ page.autopages.display_name }}".</p>
+  </header>
+
+  <div class="post-list">
+    {% if paginator.posts.size > 0 %}
+      {% for post in paginator.posts %}
+        <article class="post-item">
+          <span class="post-date">{{ post.date | date: "%B %d, %Y" }}</span>
+          <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+          <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+        </article>
+      {% endfor %}
+    {% else %}
+      <p>No posts found with this tag.</p>
+    {% endif %}
+  </div>
+
+  {% if paginator.total_pages > 1 %}
+  <nav class="pagination" style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); font-family: var(--font-mono); font-size: 0.9rem;">
+    {% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path | relative_url }}">← Newer</a>
+    {% endif %}
+    <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+    {% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path | relative_url }}">Older →</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</div>

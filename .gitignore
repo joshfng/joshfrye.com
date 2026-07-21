@@ -1,0 +1,14 @@
+# Jekyll
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+.jekyll-assets-cache/
+
+# Bundler
+.bundle/
+vendor/
+
+# LSP
+.ruby-lsp/
+
