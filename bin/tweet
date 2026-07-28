@@ -48,29 +48,47 @@ if [ -n "$VIDEO_PATH" ]; then
   fi
   
   mkdir -p assets/videos
-  VIDEO_BASENAME=$(basename "$VIDEO_PATH")
-  DEST_VIDEO="assets/videos/${DATE}-${SLUG}-${VIDEO_BASENAME}"
-  
-  cp "$VIDEO_PATH" "$DEST_VIDEO"
-  
-  FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}"
   
   if command -v ffmpeg >/dev/null 2>&1; then
+    echo "Compressing and formatting video for web..."
+    DEST_VIDEO="assets/videos/${DATE}-${SLUG}.mp4"
+    ffmpeg -y -i "$VIDEO_PATH" -vcodec libx264 -crf 23 -preset medium -c:a aac -b:a 128k "$DEST_VIDEO" >/dev/null 2>&1
+    
     mkdir -p assets/images/tweets
     DEST_IMAGE="assets/images/tweets/${DATE}-${SLUG}.jpg"
-    ffmpeg -y -i "$VIDEO_PATH" -ss 00:00:00.100 -vframes 1 "$DEST_IMAGE" >/dev/null 2>&1 || true
+    ffmpeg -y -i "$DEST_VIDEO" -ss 00:00:00.100 -vframes 1 "$DEST_IMAGE" >/dev/null 2>&1 || true
+    
     if [ -f "$DEST_IMAGE" ]; then
       FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}
 image: /${DEST_IMAGE}"
-    fi
-  fi
-  
-  VIDEO_TAG="
+      VIDEO_TAG="
+
+<video controls playsinline width=\"100%\" poster=\"/${DEST_IMAGE}\">
+  <source src=\"/${DEST_VIDEO}\" type=\"video/mp4\">
+  Your browser does not support the video tag.
+</video>"
+    else
+      FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}"
+      VIDEO_TAG="
 
 <video controls playsinline width=\"100%\">
   <source src=\"/${DEST_VIDEO}\" type=\"video/mp4\">
   Your browser does not support the video tag.
 </video>"
+    fi
+  else
+    echo "Warning: ffmpeg not found, copying video as-is."
+    VIDEO_BASENAME=$(basename "$VIDEO_PATH")
+    DEST_VIDEO="assets/videos/${DATE}-${SLUG}-${VIDEO_BASENAME}"
+    cp "$VIDEO_PATH" "$DEST_VIDEO"
+    FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}"
+    VIDEO_TAG="
+
+<video controls playsinline width=\"100%\">
+  <source src=\"/${DEST_VIDEO}\" type=\"video/mp4\">
+  Your browser does not support the video tag.
+</video>"
+  fi
 fi
 
 cat <<EOF > "$FILENAME"
