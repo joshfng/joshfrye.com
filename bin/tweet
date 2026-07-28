@@ -3,11 +3,26 @@
 set -euo pipefail
 
 if [ $# -lt 1 ] || [ -z "$1" ]; then
-  echo "Usage: bin/tweet \"<tweet text>\""
+  echo "Usage: bin/tweet \"<tweet text>\" [--video <path>]"
   exit 1
 fi
 
 TWEET_TEXT="$1"
+shift
+
+VIDEO_PATH=""
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --video)
+      VIDEO_PATH="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown argument: $1"
+      exit 1
+      ;;
+  esac
+done
 
 # Navigate to project root
 cd "$(dirname "$0")/.."
@@ -22,16 +37,42 @@ FILENAME="_tweets/${DATE}-${SLUG}.md"
 # Ensure double quotes inside title are escaped for YAML
 TITLE_ESCAPED=$(echo "$TWEET_TEXT" | sed 's/"/\\"/g')
 
+VIDEO_TAG=""
+DEST_VIDEO=""
+if [ -n "$VIDEO_PATH" ]; then
+  if [ ! -f "$VIDEO_PATH" ]; then
+    echo "Error: Video file not found: $VIDEO_PATH"
+    exit 1
+  fi
+  
+  mkdir -p assets/videos
+  VIDEO_BASENAME=$(basename "$VIDEO_PATH")
+  DEST_VIDEO="assets/videos/${DATE}-${SLUG}-${VIDEO_BASENAME}"
+  
+  cp "$VIDEO_PATH" "$DEST_VIDEO"
+  
+  VIDEO_TAG="
+
+<video controls playsinline width=\"100%\">
+  <source src=\"/${DEST_VIDEO}\">
+  Your browser does not support the video tag.
+</video>"
+fi
+
 cat <<EOF > "$FILENAME"
 ---
 title: "${TITLE_ESCAPED}"
 date: ${DATE}
 ---
 
-${TWEET_TEXT}
+${TWEET_TEXT}${VIDEO_TAG}
 EOF
 
 git add "$FILENAME"
+if [ -n "$DEST_VIDEO" ]; then
+  git add "$DEST_VIDEO"
+fi
+
 git commit -m "Tweet: ${TWEET_TEXT}"
 
 echo "==> Tweet committed: ${FILENAME}"
