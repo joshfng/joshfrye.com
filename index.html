@@ -52,6 +52,13 @@ title: Home
         <article class="post-item">
           <span class="post-date">{{ tweet.date | date: "%B %d, %Y" }}</span>
           <h3><a href="{{ tweet.url | relative_url }}">{{ tweet.title }}</a></h3>
+          {% if tweet.video %}
+          <div style="margin-top: var(--spacing-sm);">
+            <video controls playsinline width="100%" style="border-radius: 4px;">
+              <source src="{{ tweet.video | relative_url }}" type="video/mp4">
+            </video>
+          </div>
+          {% endif %}
         </article>
       {% endfor %}
     </div>
