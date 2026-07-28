@@ -1,0 +1,41 @@
+// Typography
+$font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+$font-mono: "JetBrains Mono", "Fira Code", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+// Transitions
+$transition-speed: 0.15s;
+
+:root {
+  // Light Theme (Developer/Terminal vibe)
+  --bg-color: #f8fafc;
+  --text-color: #0f172a;
+  --text-muted: #64748b;
+  --accent-color: #059669; // Terminal green
+  --accent-hover: #10b981;
+  --border-color: #e2e8f0;
+  --code-bg: #f1f5f9;
+  --card-bg: #ffffff;
+  --nav-bg: rgba(248, 250, 252, 0.9);
+  
+  --terminal-prompt: "> ";
+  
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 4rem;
+
+  --container-width: 850px;
+}
+
+[data-theme="dark"] {
+  --bg-color: #0a0a0b;
+  --text-color: #e2e8f0;
+  --text-muted: #94a3b8;
+  --accent-color: #4ade80; // Matrix/Terminal green
+  --accent-hover: #86efac;
+  --border-color: #1e293b;
+  --code-bg: #111827;
+  --card-bg: #111827;
+  --nav-bg: rgba(10, 10, 11, 0.9);
+}

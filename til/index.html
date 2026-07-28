@@ -1,0 +1,46 @@
+---
+layout: base
+title: TIL
+---
+
+<div class="container section">
+  <header style="margin-bottom: var(--spacing-xl);">
+    <h1>Today I Learned</h1>
+    <p style="color: var(--text-muted);">Bite-sized knowledge bits and quick fixes.</p>
+  </header>
+
+  <div class="filter-bar" id="lang-filter">
+    <button class="filter-btn active" data-lang="all">All</button>
+    {% assign langs = site.til | map: 'lang' | compact | uniq | sort %}
+    {% for lang in langs %}
+      <button class="filter-btn" data-lang="{{ lang }}">{{ lang | capitalize }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="post-list" id="til-list">
+    {% assign tils = site.til | sort: 'date' | reverse %}
+    {% for til in tils %}
+      <article class="post-item" data-lang="{{ til.lang }}">
+        <span class="post-date">{{ til.date | date: "%B %d, %Y" }}</span>
+        <h3><a href="{{ til.url | relative_url }}">{{ til.title }}</a></h3>
+      </article>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+(function () {
+  const btns = document.querySelectorAll('#lang-filter .filter-btn');
+  const items = document.querySelectorAll('#til-list .post-item');
+  btns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      const lang = this.dataset.lang;
+      btns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      items.forEach(item => {
+        item.style.display = (lang === 'all' || item.dataset.lang === lang) ? 'block' : 'none';
+      });
+    });
+  });
+})();
+</script>

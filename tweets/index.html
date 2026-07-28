@@ -1,0 +1,21 @@
+---
+layout: base
+title: Tweets
+permalink: /tweets/
+---
+
+<div class="container section">
+  <header style="margin-bottom: var(--spacing-xl);">
+    <h1>Tweets I'd send if I had a Twitter account</h1>
+  </header>
+
+  <div class="post-list" id="tweet-list">
+    {% assign tweets = site.tweets | sort: 'date' | reverse %}
+    {% for tweet in tweets %}
+      <article class="post-item">
+        <span class="post-date">{{ tweet.date | date: "%B %d, %Y" }}</span>
+        <h3><a href="{{ tweet.url | relative_url }}">{{ tweet.title }}</a></h3>
+      </article>
+    {% endfor %}
+  </div>
+</div>

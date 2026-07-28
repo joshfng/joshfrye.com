@@ -1,0 +1,84 @@
+title: joshfrye.com
+author: Josh Frye
+email: josh@joshfrye.com
+description: "Software Engineering, Platform, DevOps, Cars, and Hardware Hacking."
+baseurl: ""
+url: "https://joshfrye.com"
+
+permalink: /blog/:year/:month/:slug/
+
+collections:
+  til:
+    output: true
+    permalink: /til/:year/:month/:slug/
+  tweets:
+    output: true
+    permalink: /tweets/:year/:month/:slug/
+
+defaults:
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: "_til"
+      type: til
+    values:
+      layout: til
+  - scope:
+      path: "_tweets"
+      type: tweets
+    values:
+      layout: tweet
+
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  syntax_highlighter: rouge
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate-v2
+
+social:
+  github: joshfng
+  linkedin: joshfrye
+
+include:
+  - .nojekyll
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - tmp
+
+google_analytics: "G-54NH58S6KY"
+
+autopages:
+  enabled: true
+  categories:
+    enabled: true
+    layouts:
+      - autopage_category.html
+    title: "Category: :cat"
+    permalink: "/categories/:cat/"
+  tags:
+    enabled: true
+    layouts:
+      - autopage_tag.html
+    title: "Tag: :tag"
+    permalink: "/tags/:tag/"
+  collections:
+    enabled: false
+
+pagination:
+  enabled: true
+  per_page: 10
+  permalink: "/page/:num/"
+
+

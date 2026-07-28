@@ -1,0 +1,107 @@
+---
+layout: base
+---
+
+<div class="cv-container">
+  {% if content and content != "" %}
+    <div class="cv-intro" style="margin-bottom: var(--spacing-lg);">
+      {{ content }}
+    </div>
+  {% endif %}
+
+  {% assign cv = site.data.cv %}
+  
+  <header>
+    <h1>{{ cv.name }}</h1>
+    <div class="contact-info" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+      {% if cv.email %}
+        <span style="white-space: nowrap;">{{ cv.email }}</span>
+        <span style="color: var(--text-muted);">•</span>
+      {% endif %}
+      {% if cv.phone %}
+        <span style="white-space: nowrap;">{{ cv.phone }}</span>
+        <span style="color: var(--text-muted);">•</span>
+      {% endif %}
+      {% if cv.github %}
+        <a href="https://{{ cv.github }}" style="white-space: nowrap;">{{ cv.github }}</a>
+      {% endif %}
+      {% if cv.github and cv.linkedin %}
+        <span style="color: var(--text-muted);">•</span>
+      {% endif %}
+      {% if cv.linkedin %}
+        <a href="https://{{ cv.linkedin }}" style="white-space: nowrap;">{{ cv.linkedin }}</a>
+        <span style="color: var(--text-muted);">•</span>
+      {% endif %}
+      <a href="{{ '/assets/documents/Josh_Frye_Resume.pdf' | relative_url }}" target="_blank" style="white-space: nowrap;">Download Resume</a>
+    </div>
+  </header>
+
+  <section>
+    <h2>Summary</h2>
+    <p>{{ cv.summary }}</p>
+  </section>
+
+  {% if cv.achievements and cv.achievements.size > 0 %}
+  <section>
+    <h2>Key Achievements</h2>
+    <ul style="list-style: none; padding-left: 0;">
+      {% for achievement in cv.achievements %}
+        <li style="margin-bottom: var(--spacing-xs); font-size: 0.9rem; color: var(--text-muted); position: relative; padding-left: var(--spacing-md); border-left: 1px solid var(--border-color);">
+          <span style="font-weight: 500; color: var(--accent-color);">*</span> {{ achievement }}
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <section>
+    <h2>Experience</h2>
+    {% for job in cv.experience %}
+      <div class="cv-item">
+        <div class="cv-item-header">
+          <h3>{{ job.role }}</h3>
+          <span class="date">{{ job.period }}</span>
+        </div>
+        <div class="role">{{ job.company }}</div>
+        <ul>
+          {% for bullet in job.highlights %}
+            <li>{{ bullet }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      {% for category in cv.skills %}
+        <div class="skill-category">
+          <h4>{{ category.name }}</h4>
+          <ul>
+            {% for skill in category.items %}
+              <li>{{ skill }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% if cv.education and cv.education.size > 0 %}
+  <section>
+    <h2>Education</h2>
+    {% for edu in cv.education %}
+      <div class="cv-item">
+        <div class="cv-item-header">
+          <h3>{{ edu.degree }}</h3>
+          <span class="date">{{ edu.period }}</span>
+        </div>
+        <div class="role">{{ edu.school }}</div>
+      </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+</div>
+
+

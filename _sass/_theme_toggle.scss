@@ -1,0 +1,30 @@
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all $transition-speed;
+
+  &:hover {
+    background-color: var(--code-bg);
+    border-color: var(--accent-color);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .sun-icon { display: none; }
+  .moon-icon { display: block; }
+}
+
+[data-theme="dark"] {
+  .sun-icon { display: block; }
+  .moon-icon { display: none; }
+}
