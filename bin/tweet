@@ -57,7 +57,7 @@ if [ -n "$VIDEO_PATH" ]; then
   VIDEO_TAG="
 
 <video controls playsinline width=\"100%\">
-  <source src=\"/${DEST_VIDEO}\">
+  <source src=\"/${DEST_VIDEO}\" type=\"video/mp4\">
   Your browser does not support the video tag.
 </video>"
 fi
