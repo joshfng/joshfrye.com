@@ -39,6 +39,7 @@ TITLE_ESCAPED=$(echo "$TWEET_TEXT" | sed 's/"/\\"/g')
 
 VIDEO_TAG=""
 DEST_VIDEO=""
+DEST_IMAGE=""
 FRONT_MATTER_VIDEO=""
 if [ -n "$VIDEO_PATH" ]; then
   if [ ! -f "$VIDEO_PATH" ]; then
@@ -53,6 +54,16 @@ if [ -n "$VIDEO_PATH" ]; then
   cp "$VIDEO_PATH" "$DEST_VIDEO"
   
   FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}"
+  
+  if command -v ffmpeg >/dev/null 2>&1; then
+    mkdir -p assets/images/tweets
+    DEST_IMAGE="assets/images/tweets/${DATE}-${SLUG}.jpg"
+    ffmpeg -y -i "$VIDEO_PATH" -ss 00:00:00.100 -vframes 1 "$DEST_IMAGE" >/dev/null 2>&1 || true
+    if [ -f "$DEST_IMAGE" ]; then
+      FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}
+image: /${DEST_IMAGE}"
+    fi
+  fi
   
   VIDEO_TAG="
 
@@ -75,6 +86,9 @@ EOF
 git add "$FILENAME"
 if [ -n "$DEST_VIDEO" ]; then
   git add "$DEST_VIDEO"
+fi
+if [ -n "$DEST_IMAGE" ] && [ -f "$DEST_IMAGE" ]; then
+  git add "$DEST_IMAGE"
 fi
 
 git commit -m "Tweet: ${TWEET_TEXT}"
