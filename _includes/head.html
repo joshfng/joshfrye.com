@@ -16,6 +16,13 @@
 </script>
 
 {% seo %}
+{% if page.video %}
+  <meta property="og:video" content="{{ page.video | absolute_url }}">
+  <meta property="og:video:secure_url" content="{{ page.video | absolute_url }}">
+  <meta property="og:video:type" content="video/mp4">
+  <meta name="twitter:card" content="player">
+  <meta name="twitter:player" content="{{ page.video | absolute_url }}">
+{% endif %}
 {% feed_meta %}
 {% include google-analytics.html %}
 

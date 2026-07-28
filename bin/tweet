@@ -39,6 +39,7 @@ TITLE_ESCAPED=$(echo "$TWEET_TEXT" | sed 's/"/\\"/g')
 
 VIDEO_TAG=""
 DEST_VIDEO=""
+FRONT_MATTER_VIDEO=""
 if [ -n "$VIDEO_PATH" ]; then
   if [ ! -f "$VIDEO_PATH" ]; then
     echo "Error: Video file not found: $VIDEO_PATH"
@@ -50,6 +51,8 @@ if [ -n "$VIDEO_PATH" ]; then
   DEST_VIDEO="assets/videos/${DATE}-${SLUG}-${VIDEO_BASENAME}"
   
   cp "$VIDEO_PATH" "$DEST_VIDEO"
+  
+  FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}"
   
   VIDEO_TAG="
 
@@ -63,6 +66,7 @@ cat <<EOF > "$FILENAME"
 ---
 title: "${TITLE_ESCAPED}"
 date: ${DATE}
+${FRONT_MATTER_VIDEO}
 ---
 
 ${TWEET_TEXT}${VIDEO_TAG}
