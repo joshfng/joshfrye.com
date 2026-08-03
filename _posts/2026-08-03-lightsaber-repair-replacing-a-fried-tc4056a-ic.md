@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Lightsaber Electronics Repair: Replacing the TC4056A Charging IC"
+title: "Lightsaber Repair: Replacing a fried TC4056A IC"
 date: 2026-08-03
 categories: [repair, electronics]
 ---
