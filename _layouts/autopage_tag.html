@@ -1,36 +1,82 @@
 ---
 layout: base
+pagination:
+  enabled: false
 ---
+
+{% assign tag = page.autopage.display_name | default: page.pagination.tag %}
+{% assign tag_key = tag | downcase %}
+
+{% assign tagged_posts = site.posts | where_exp: "doc", "doc.tags contains tag_key" %}
+{% assign tils = site.til | sort: "date" | reverse %}
+{% assign tagged_tils = tils | where_exp: "doc", "doc.tags contains tag_key" %}
+{% assign tweets = site.tweets | sort: "date" | reverse %}
+{% assign tagged_tweets = tweets | where_exp: "doc", "doc.tags contains tag_key" %}
+{% assign projects = site.projects | sort: "rank" %}
+{% assign tagged_projects = projects | where_exp: "doc", "doc.tags contains tag_key" %}
+{% assign tagged_total = tagged_posts.size | plus: tagged_tils.size | plus: tagged_tweets.size | plus: tagged_projects.size %}
 
 <div class="container section">
   <header style="margin-bottom: var(--spacing-xl);">
-    <h1>Tag: #{{ page.autopages.display_name }}</h1>
-    <p style="color: var(--text-muted);">Posts tagged with "#{{ page.autopages.display_name }}".</p>
+    <h1>Tag: #{{ tag }}</h1>
+    <p style="color: var(--text-muted);">Everything tagged with "#{{ tag }}".</p>
   </header>
 
-  <div class="post-list">
-    {% if paginator.posts.size > 0 %}
-      {% for post in paginator.posts %}
+  {% if tagged_posts.size > 0 %}
+  <section class="archive-section">
+    <h2>Posts <span class="badge badge-post">{{ tagged_posts.size }}</span></h2>
+    <div class="post-list">
+      {% for post in tagged_posts %}
         <article class="post-item">
           <span class="post-date">{{ post.date | date: "%B %d, %Y" }}</span>
           <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
           <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
         </article>
       {% endfor %}
-    {% else %}
-      <p>No posts found with this tag.</p>
-    {% endif %}
-  </div>
+    </div>
+  </section>
+  {% endif %}
 
-  {% if paginator.total_pages > 1 %}
-  <nav class="pagination" style="margin-top: var(--spacing-xl); display: flex; gap: var(--spacing-md); font-family: var(--font-mono); font-size: 0.9rem;">
-    {% if paginator.previous_page %}
-      <a href="{{ paginator.previous_page_path | relative_url }}">← Newer</a>
-    {% endif %}
-    <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
-    {% if paginator.next_page %}
-      <a href="{{ paginator.next_page_path | relative_url }}">Older →</a>
-    {% endif %}
-  </nav>
+  {% if tagged_tils.size > 0 %}
+  <section class="archive-section">
+    <h2>TIL <span class="badge badge-til">{{ tagged_tils.size }}</span></h2>
+    <div class="post-list">
+      {% for til in tagged_tils %}
+        <article class="post-item">
+          <span class="post-date">{{ til.date | date: "%B %d, %Y" }}</span>
+          <h3><a href="{{ til.url | relative_url }}">{{ til.title }}</a></h3>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if tagged_tweets.size > 0 %}
+  <section class="archive-section">
+    <h2>Tweets <span class="badge badge-tweet">{{ tagged_tweets.size }}</span></h2>
+    <div class="post-list">
+      {% for tweet in tagged_tweets %}
+        <article class="post-item">
+          <span class="post-date">{{ tweet.date | date: "%B %d, %Y" }}</span>
+          <h3><a href="{{ tweet.url | relative_url }}">{{ tweet.title }}</a></h3>
+        </article>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if tagged_projects.size > 0 %}
+  <section class="archive-section">
+    <h2>Projects <span class="badge badge-project">{{ tagged_projects.size }}</span></h2>
+    <div class="post-list">
+      {% for project in tagged_projects %}
+        {% include project_item.html project=project %}
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if tagged_total == 0 %}
+    <p>Nothing tagged with "#{{ tag }}" yet.</p>
   {% endif %}
 </div>

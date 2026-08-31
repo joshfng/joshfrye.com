@@ -82,6 +82,29 @@ One to three sentence explainer.
 ```
 ```
 
+### Projects
+
+`_projects/` is generated — do not edit it by hand. Regenerate it from GitHub with:
+
+```sh
+bin/projects
+```
+
+The script requires [`gh`](https://cli.github.com/) (authenticated) and `jq`. It
+pulls every public, non-forked, non-archived repo owned by the authenticated
+user and writes one stub per repo with its description, stats and languages.
+Languages become tags, so they show up on `/tags/` and on the per-tag pages
+alongside posts, TILs and tweets.
+
+Useful flags:
+
+```sh
+bin/projects --dry-run                 # show what would be written
+bin/projects --user someone-else       # different GitHub login
+bin/projects --exclude .github,scratch # skip repos by name
+bin/projects --min-language-share 0.1  # drop languages under 10% of a repo's bytes
+```
+
 ## Deploy
 
 The site deploys automatically via Cloudflare Pages on every push to `main`.

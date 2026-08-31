@@ -14,6 +14,8 @@ collections:
   tweets:
     output: true
     permalink: /tweets/:year/:month/:slug/
+  projects:
+    output: false
 
 defaults:
   - scope:

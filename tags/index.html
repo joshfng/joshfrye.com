@@ -12,7 +12,17 @@ permalink: /tags/
 {% for til in site.til %}
   {% assign all_tags = all_tags | concat: til.tags %}
 {% endfor %}
+{% for tweet in site.tweets %}
+  {% assign all_tags = all_tags | concat: tweet.tags %}
+{% endfor %}
+{% for project in site.projects %}
+  {% assign all_tags = all_tags | concat: project.tags %}
+{% endfor %}
 {% assign all_tags = all_tags | uniq | sort %}
+
+{% assign tils = site.til | sort: 'date' | reverse %}
+{% assign tweets = site.tweets | sort: 'date' | reverse %}
+{% assign projects = site.projects | sort: 'rank' %}
 
 {% for tag in all_tags %}
 <div class="archive-section" id="{{ tag | slugify }}">
@@ -23,17 +33,37 @@ permalink: /tags/
     <li class="archive-item">
       <time>{{ post.date | date: "%Y-%m-%d" }}</time>
       <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      <span class="badge badge-category">post</span>
+      <span class="badge badge-post">post</span>
     </li>
     {% endif %}
     {% endfor %}
-    {% assign tils = site.til | sort: 'date' | reverse %}
+
     {% for til in tils %}
     {% if til.tags contains tag %}
     <li class="archive-item">
       <time>{{ til.date | date: "%Y-%m-%d" }}</time>
       <a href="{{ til.url | relative_url }}">{{ til.title }}</a>
-      <span class="badge badge-lang">til</span>
+      <span class="badge badge-til">til</span>
+    </li>
+    {% endif %}
+    {% endfor %}
+
+    {% for tweet in tweets %}
+    {% if tweet.tags contains tag %}
+    <li class="archive-item">
+      <time>{{ tweet.date | date: "%Y-%m-%d" }}</time>
+      <a href="{{ tweet.url | relative_url }}">{{ tweet.title }}</a>
+      <span class="badge badge-tweet">tweet</span>
+    </li>
+    {% endif %}
+    {% endfor %}
+
+    {% for project in projects %}
+    {% if project.tags contains tag %}
+    <li class="archive-item">
+      <time>{{ project.date | date: "%Y-%m-%d" }}</time>
+      <a href="{{ project.repo_url }}" rel="noopener">{{ project.title }}</a>
+      <span class="badge badge-project">project</span>
     </li>
     {% endif %}
     {% endfor %}

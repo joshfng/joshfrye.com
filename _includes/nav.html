@@ -5,6 +5,7 @@
       <a href="{{ '/' | relative_url }}" {% if page.url == '/' %}style="color: var(--accent-color)"{% endif %}>home</a>
       <a href="{{ '/blog/' | relative_url }}" {% if page.url contains '/blog/' %}style="color: var(--accent-color)"{% endif %}>blog</a>
       <a href="{{ '/tweets/' | relative_url }}" {% if page.url contains '/tweets/' %}style="color: var(--accent-color)"{% endif %}>tweets</a>
+      <a href="{{ '/projects/' | relative_url }}" {% if page.url contains '/projects/' %}style="color: var(--accent-color)"{% endif %}>projects</a>
       <a href="{{ '/about/' | relative_url }}" {% if page.url contains '/about/' %}style="color: var(--accent-color)"{% endif %}>about/cv</a>
       {% include theme_toggle.html %}
     </div>
