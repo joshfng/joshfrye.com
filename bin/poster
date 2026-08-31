@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+#
+# Generate a poster (thumbnail) image for a video.
+#
+# Usage: bin/poster <video-path> [output-path]
+#
+# Posters live alongside each other in assets/images/tweets/posters/ and are
+# named after the video they belong to, so the pairing is always obvious:
+#   assets/videos/2026-08-19-foo.mp4 -> assets/images/tweets/posters/2026-08-19-foo.jpg
+#
+# Prints the poster path (relative to the project root) on success.
+
+set -euo pipefail
+
+if [ $# -lt 1 ] || [ -z "$1" ]; then
+  echo "Usage: bin/poster <video-path> [output-path]" >&2
+  exit 1
+fi
+
+VIDEO_PATH="$1"
+OUTPUT_PATH="${2:-}"
+
+cd "$(dirname "$0")/.."
+
+if [ ! -f "$VIDEO_PATH" ]; then
+  echo "Error: video file not found: $VIDEO_PATH" >&2
+  exit 1
+fi
+
+if ! command -v ffmpeg >/dev/null 2>&1; then
+  echo "Error: ffmpeg not found, cannot generate poster." >&2
+  exit 1
+fi
+
+POSTER_DIR="assets/images/tweets/posters"
+
+if [ -z "$OUTPUT_PATH" ]; then
+  VIDEO_BASENAME=$(basename "$VIDEO_PATH")
+  OUTPUT_PATH="${POSTER_DIR}/${VIDEO_BASENAME%.*}.jpg"
+fi
+
+mkdir -p "$(dirname "$OUTPUT_PATH")"
+
+# Cap poster width at 1280px, keep aspect ratio, force even dimensions.
+SCALE="scale='min(1280,iw)':-2"
+
+# Prefer a representative frame from the first few seconds rather than frame
+# one, which is often black on fade-in videos.
+ffmpeg -y -t 5 -i "$VIDEO_PATH" -vf "thumbnail=90,${SCALE}" -frames:v 1 -q:v 3 "$OUTPUT_PATH" >/dev/null 2>&1 || true
+
+# If that frame is (nearly) all black, fall back to a frame from the middle.
+is_black() {
+  [ -f "$1" ] || return 0
+  local mean
+  mean=$(ffmpeg -i "$1" -vf "signalstats,metadata=print:key=lavfi.signalstats.YAVG" -f null - 2>&1 |
+    grep -o 'lavfi.signalstats.YAVG=[0-9.]*' | head -1 | cut -d= -f2)
+  [ -z "$mean" ] && return 1
+  awk -v m="$mean" 'BEGIN { exit !(m < 20) }'
+}
+
+if is_black "$OUTPUT_PATH"; then
+  DURATION=$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$VIDEO_PATH" 2>/dev/null || echo "")
+  MIDPOINT=$(awk -v d="${DURATION:-0}" 'BEGIN { printf "%.2f", (d > 0 ? d / 2 : 1) }')
+  ffmpeg -y -ss "$MIDPOINT" -i "$VIDEO_PATH" -vf "$SCALE" -frames:v 1 -q:v 3 "$OUTPUT_PATH" >/dev/null 2>&1 || true
+fi
+
+if [ ! -s "$OUTPUT_PATH" ]; then
+  echo "Error: failed to generate poster for $VIDEO_PATH" >&2
+  exit 1
+fi
+
+echo "$OUTPUT_PATH"
