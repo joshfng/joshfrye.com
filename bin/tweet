@@ -60,21 +60,12 @@ if [ -n "$VIDEO_PATH" ]; then
     if [ -n "$DEST_IMAGE" ] && [ -f "$DEST_IMAGE" ]; then
       FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}
 image: /${DEST_IMAGE}"
-      VIDEO_TAG="
-
-<video controls playsinline width=\"100%\" poster=\"/${DEST_IMAGE}\">
-  <source src=\"/${DEST_VIDEO}\" type=\"video/mp4\">
-  Your browser does not support the video tag.
-</video>"
     else
       FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}"
-      VIDEO_TAG="
-
-<video controls playsinline width=\"100%\">
-  <source src=\"/${DEST_VIDEO}\" type=\"video/mp4\">
-  Your browser does not support the video tag.
-</video>"
     fi
+    VIDEO_TAG="
+
+{% include tweet_video.html tweet=page %}"
   else
     echo "Warning: ffmpeg not found, copying video as-is."
     VIDEO_BASENAME=$(basename "$VIDEO_PATH")
@@ -83,10 +74,7 @@ image: /${DEST_IMAGE}"
     FRONT_MATTER_VIDEO="video: /${DEST_VIDEO}"
     VIDEO_TAG="
 
-<video controls playsinline width=\"100%\">
-  <source src=\"/${DEST_VIDEO}\" type=\"video/mp4\">
-  Your browser does not support the video tag.
-</video>"
+{% include tweet_video.html tweet=page %}"
   fi
 fi
 
