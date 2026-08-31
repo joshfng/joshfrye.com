@@ -41,12 +41,15 @@ fi
 
 mkdir -p "$(dirname "$OUTPUT_PATH")"
 
-# Cap poster width at 1280px, keep aspect ratio, force even dimensions.
-SCALE="scale='min(1280,iw)':-2"
+# Cap the longest side at 1280px (so portrait video gets capped too), keep
+# aspect ratio, force even dimensions.
+MAX_DIM=1280
+QUALITY=5
+SCALE="scale='if(gt(iw,ih),min(${MAX_DIM},iw),-2)':'if(gt(iw,ih),-2,min(${MAX_DIM},ih))'"
 
 # Prefer a representative frame from the first few seconds rather than frame
 # one, which is often black on fade-in videos.
-ffmpeg -y -t 5 -i "$VIDEO_PATH" -vf "thumbnail=90,${SCALE}" -frames:v 1 -q:v 3 "$OUTPUT_PATH" >/dev/null 2>&1 || true
+ffmpeg -y -t 5 -i "$VIDEO_PATH" -vf "thumbnail=90,${SCALE}" -frames:v 1 -q:v $QUALITY "$OUTPUT_PATH" >/dev/null 2>&1 || true
 
 # If that frame is (nearly) all black, fall back to a frame from the middle.
 is_black() {
@@ -61,7 +64,7 @@ is_black() {
 if is_black "$OUTPUT_PATH"; then
   DURATION=$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$VIDEO_PATH" 2>/dev/null || echo "")
   MIDPOINT=$(awk -v d="${DURATION:-0}" 'BEGIN { printf "%.2f", (d > 0 ? d / 2 : 1) }')
-  ffmpeg -y -ss "$MIDPOINT" -i "$VIDEO_PATH" -vf "$SCALE" -frames:v 1 -q:v 3 "$OUTPUT_PATH" >/dev/null 2>&1 || true
+  ffmpeg -y -ss "$MIDPOINT" -i "$VIDEO_PATH" -vf "$SCALE" -frames:v 1 -q:v $QUALITY "$OUTPUT_PATH" >/dev/null 2>&1 || true
 fi
 
 if [ ! -s "$OUTPUT_PATH" ]; then
