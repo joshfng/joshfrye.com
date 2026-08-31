@@ -329,6 +329,13 @@ main {
       color: var(--accent-color);
       &::before { content: "whoami: "; opacity: 0.5; }
     }
+    .cv-tagline {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: var(--spacing-sm);
+      &::before { content: "role: "; opacity: 0.5; }
+    }
+
     .contact-info {
       display: flex;
       gap: var(--spacing-md);

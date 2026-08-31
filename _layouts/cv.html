@@ -13,6 +13,9 @@ layout: base
   
   <header>
     <h1>{{ cv.name }}</h1>
+    {% if cv.tagline %}
+      <div class="cv-tagline">{{ cv.tagline }}</div>
+    {% endif %}
     <div class="contact-info" style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
       {% if cv.email %}
         <span style="white-space: nowrap;">{{ cv.email }}</span>
@@ -32,7 +35,9 @@ layout: base
         <a href="https://{{ cv.linkedin }}" style="white-space: nowrap;">{{ cv.linkedin }}</a>
         <span style="color: var(--text-muted);">•</span>
       {% endif %}
-      <a href="{{ '/assets/documents/Josh_Frye_Resume.pdf' | relative_url }}" target="_blank" style="white-space: nowrap;">Download Resume</a>
+      <a href="{{ '/assets/documents/Josh_Frye_Resume.pdf' | relative_url }}" target="_blank" style="white-space: nowrap;">Resume (PDF)</a>
+      <span style="color: var(--text-muted);">•</span>
+      <a href="{{ '/assets/documents/Josh_Frye_Resume.docx' | relative_url }}" style="white-space: nowrap;">Resume (DOCX)</a>
     </div>
   </header>
 
@@ -41,16 +46,28 @@ layout: base
     <p>{{ cv.summary }}</p>
   </section>
 
-  {% if cv.achievements and cv.achievements.size > 0 %}
+  {% if cv.projects and cv.projects.size > 0 %}
   <section>
-    <h2>Key Achievements</h2>
-    <ul style="list-style: none; padding-left: 0;">
-      {% for achievement in cv.achievements %}
-        <li style="margin-bottom: var(--spacing-xs); font-size: 0.9rem; color: var(--text-muted); position: relative; padding-left: var(--spacing-md); border-left: 1px solid var(--border-color);">
-          <span style="font-weight: 500; color: var(--accent-color);">*</span> {{ achievement }}
-        </li>
-      {% endfor %}
-    </ul>
+    <h2>Projects</h2>
+    {% for project in cv.projects %}
+      <div class="cv-item">
+        <div class="cv-item-header">
+          <h3>{{ project.name }}</h3>
+          {% if project.url %}
+            <span class="date"><a href="{{ project.url }}" rel="noopener">{{ project.url | remove: 'https://' }}</a></span>
+          {% endif %}
+        </div>
+        {% if project.tagline %}
+          <div class="role">{{ project.tagline }}</div>
+        {% endif %}
+        <ul>
+          <li>{{ project.description }}</li>
+        </ul>
+      </div>
+    {% endfor %}
+    <p style="font-size: 0.85rem;">
+      <a href="{{ '/projects/' | relative_url }}">All open source projects →</a>
+    </p>
   </section>
   {% endif %}
 

@@ -1,4 +1,5 @@
 name: Josh Frye
+tagline: Platform / DevOps / Backend
 github: github.com/joshfng
 linkedin: linkedin.com/in/joshfng
 summary: >-
@@ -9,13 +10,14 @@ experience:
     company: Patriot Software, Canton, OH
     period: May 2024 - Nov 2025
     highlights:
-      - Implement GitOps workflows using Flux, GitHub Actions, and AWS CDK for multi-cluster Kubernetes management, reducing deployment errors and improving auditability.
-      - Architect PostgreSQL logical replication using Snowflake Openflow to sync all databases in realtime to snowflake.
+      - Designed and implemented GitOps workflows using Flux, GitHub Actions, and AWS CDK for multi-cluster Kubernetes management, reducing deployment errors and improving auditability.
+      - Legacy deployment support on Azure w/ IIS.
+      - Designed and implemented PostgreSQL logical replication using Snowflake Openflow to sync all databases in realtime to snowflake.
   - role: Senior Software Engineer
     company: Frye Consulting, Canton, OH
     period: Nov 2022 - May 2024
     highlights:
-      - Provided DevOps and platform engineering consulting for startups, focusing on Kubernetes migrations, CI/CD pipeline optimization, and infrastructure automation.
+      - Provided DevOps and Platform engineering consulting for startups, focusing on Kubernetes migrations, CI/CD pipeline optimization, and infrastructure automation.
   - role: Senior Platform Engineer
     company: Papa Inc, Miami, FL
     period: Nov 2020 - Nov 2022
@@ -24,22 +26,22 @@ experience:
       - This included a chatops driven coordinator that interfaced with GitHub Actions, Amazon ECR, Amazon EKS, Docker Hub, Helm, and Kubernetes.
   - role: Senior Software Engineer
     company: StackShare, San Francisco, CA
-    period: Nov 2020 - Nov 2022
+    period: Aug 2016 - Oct 2020
     highlights:
-      - Owned all backend systems powering StackShare's frontend APIs, implementing GraphQL and react_on_rails to modernize the stack.
+      - Owned all backend systems powering StackShare's frontend APIs and implemented GraphQL.
       - Worked on scaling issues and refactoring technical debt as well as writing supporting apis for new feature development.
-      - Implemented GraphQL, react_on_rails, and helped get our engineering team focused on performance.
+      - Helped get our engineering team focused on performance.
       - Managed all devops work, including infrastructure deployed on Heroku, DigitalOcean, AWS, and GCP, as well as Dockerized our application and maintained our CI systems.
-      - Handled alerting and management of 3 Kubernetes clusters running on GCP deployed via custom chatbot and helm charts as well as handling on-call incidents, stability, performance, and uptime issues.
+      - Handled alerting and management of 3 Kubernetes clusters running on GCP deployed via custom chatbot and helm charts as well as handling on-call incidents, stability, performance, and uptime issues, and managing outsourced consultants.
   - role: Senior Software Engineer
     company: GitLab Inc, San Francisco, CA
     period: Jan 2016 - Aug 2016
     highlights:
-      - Joined via acquisition of GitHost. Delivered product features and backend Rails performance improvements to help scale gitlab.com as it hit explosive growth.
+      - Joined via acquisition of GitHost. Delivered product features and backend Rails and Postgres performance improvements to help scale gitlab.com as it hit explosive growth.
       - Contributed to the Gogs open source project.
   - role: Founder
     company: GitHost, Brooklyn, NY
-    period: Dev 2014 - Dec 2015
+    period: Dec 2014 - Dec 2015
     highlights:
       - Founded and built GitHost, a platform for automated deployment, management, and upgrades of private self hosted GitLab instances in the cloud.
       - Adopted by GitLab Inc. in 2015 and I later joined the GitLab team as a Senior Software Engineer.
@@ -47,18 +49,19 @@ experience:
     company: DigitalOcean Inc, New York, NY
     period: Aug 2013 - Jul 2014
     highlights:
-      - Worked on the backend scheduling and server image generation systems responsible for deploying servers on DigitalOcean’s custom cloud platform as well as the first version of their rest api written in Ruby.
-      - Wrote the first Android app for server managment before I was hired.
+      - Worked on the backend VM scheduling system/hypervisor.
+      - Rebuilt the VM disk image generation system responsible for deploying VMs on DigitalOcean ("One-click deployments"), as well as the first version of their rest api written in Ruby.
+      - Wrote the first Android app for VM management before I was hired.
   - role: Senior Software Engineer
     company: Etsy, Brooklyn, NY
-    period: Jan 2016 - Aug 2016
+    period: Nov 2011 - Aug 2013
     highlights:
       - Served on the "Core" team as a performance specialist for a platform serving 95 million users.
       - Refactored critical paths across the software stack to ensure page response times met strict SLAs, directly impacting user experience and conversion rates.
 skills:
   - name: Infrastructure & Tools
     items:
-      - AWS, GCP, EKS, ECR, Terraform, Ansible
+      - AWS, GCP, EKS, ECR, Terraform, Ansible, CDK, Azure
       - Docker, Kubernetes, Helm, Containerd, Buildx, Multi-arch images
       - Postgresql
       - GitHub, GitLab, Nginx, Linux (Ubuntu, Debian, RedHat)
@@ -70,7 +73,13 @@ skills:
       - ChatOps, GitOps, Internal Developer Platforms
   - name: Languages
     items:
-      - Ruby, Elixir, Go, Python, Java, PHP, JavaScript, SQL
-achievements:
-  - GitHost — Managed GitLab Hosting (https://githost.io/) - Was handed off to GitLab and has since been shutdown. Automated GitLab setup and upgrades, provisioned automatic SSL, preconfigured CI runners.
-  - RailsReady — Ruby and Rails setup script for Linux systems (https://github.com/joshfng/railsready) - now retired. Automated the cumbersome process of setting up Ruby on OSX years ago when it was incredibly difficult and error prone.
+      - Ruby, Elixir, Go, Python, Java, PHP, JavaScript, SQL, HCL
+projects:
+  - name: GitHost
+    tagline: Managed GitLab Hosting
+    url: https://githost.io/
+    description: Was handed off to GitLab and has since been shut down. Automated GitLab setup and upgrades, provisioned automatic SSL, preconfigured CI runners.
+  - name: RailsReady
+    tagline: Ruby and Rails setup script for Linux systems
+    url: https://github.com/joshfng/railsready
+    description: Now retired. Automated the cumbersome process of setting up Ruby on OSX years ago when it was incredibly difficult and error prone.
