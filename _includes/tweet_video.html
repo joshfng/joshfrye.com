@@ -1,0 +1,12 @@
+{% comment %}
+Renders a tweet's video with its poster image. Pass the tweet:
+  {% include tweet_video.html tweet=tweet %}
+{% endcomment %}
+{% if include.tweet.video %}
+<div style="margin-top: var(--spacing-sm);">
+  <video controls playsinline preload="metadata" width="100%" style="border-radius: 4px;"{% if include.tweet.image %} poster="{{ include.tweet.image | relative_url }}"{% endif %}>
+    <source src="{{ include.tweet.video | relative_url }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+{% endif %}
