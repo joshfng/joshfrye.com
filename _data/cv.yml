@@ -3,10 +3,10 @@ tagline: Platform / DevOps / Backend
 github: github.com/joshfng
 linkedin: linkedin.com/in/joshfng
 summary: >-
-  Platform engineer with 13+ years building products, developer tools and
+  Platform engineer with 15+ years building products, developer tools and
   infrastructure at scale.
 experience:
-  - role: Senior Devops Engineer
+  - role: Senior DevOps Engineer
     company: Patriot Software, Canton, OH
     period: May 2024 - Nov 2025
     highlights:
@@ -24,7 +24,7 @@ experience:
     highlights:
       - Built an Internal Developer Platform from scratch, reducing service deployment time from hours to under 15 minutes and enabling engineering teams to ship new services in a consistent and reliable manner.
       - This included a chatops driven coordinator that interfaced with GitHub Actions, Amazon ECR, Amazon EKS, Docker Hub, Helm, and Kubernetes.
-  - role: Senior Software Engineer
+  - role: Senior Lead Software Engineer
     company: StackShare, San Francisco, CA
     period: Aug 2016 - Oct 2020
     highlights:
@@ -46,6 +46,11 @@ experience:
       - Founded and built GitHost, a platform for automated deployment, management, and upgrades of private self hosted GitLab instances in the cloud.
       - Adopted by GitLab Inc. in 2015 and I later joined the GitLab team as a Senior Software Engineer.
   - role: Senior Software Engineer
+    company: HashiCorp, San Francisco, CA
+    period: Jul 2014 - Jan 2015
+    highlights:
+      - Collaborated on the development of Docker-integrated products and infrastructure automation tools during the company's foundational growth phase.
+  - role: Senior Software Engineer
     company: DigitalOcean Inc, New York, NY
     period: Aug 2013 - Jul 2014
     highlights:
@@ -58,6 +63,12 @@ experience:
     highlights:
       - Served on the "Core" team as a performance specialist for a platform serving 95 million users.
       - Refactored critical paths across the software stack to ensure page response times met strict SLAs, directly impacting user experience and conversion rates.
+  - role: Software Engineer
+    company: Wyred LLC, Columbus, OH
+    period: Sep 2010 - Nov 2011
+    highlights:
+      - Built backend APIs in PHP and MySQL to support the company's web and mobile applications.
+      - Managed deployments and resolved scaling problems.
 skills:
   - name: Infrastructure & Tools
     items:
