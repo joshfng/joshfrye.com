@@ -41,10 +41,12 @@ layout: base
     </div>
   </header>
 
+  {% if cv.summary %}
   <section>
     <h2>Summary</h2>
     <p>{{ cv.summary }}</p>
   </section>
+  {% endif %}
 
   {% if cv.projects and cv.projects.size > 0 %}
   <section>

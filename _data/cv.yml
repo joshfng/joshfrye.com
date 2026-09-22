@@ -1,44 +1,35 @@
 name: Josh Frye
-tagline: Platform / DevOps / Backend
 github: github.com/joshfng
-linkedin: linkedin.com/in/joshfng
-summary: >-
-  Platform engineer with 15+ years building products, developer tools and
-  infrastructure at scale.
 experience:
   - role: Senior DevOps Engineer
     company: Patriot Software, Canton, OH
     period: May 2024 - Nov 2025
     highlights:
-      - Designed and implemented GitOps workflows using Flux, GitHub Actions, and AWS CDK for multi-cluster Kubernetes management, reducing deployment errors and improving auditability.
-      - Legacy deployment support on Azure w/ IIS.
-      - Designed and implemented PostgreSQL logical replication using Snowflake Openflow to sync all databases in realtime to snowflake.
-  - role: Senior Software Engineer
-    company: Frye Consulting, Canton, OH
-    period: Nov 2022 - May 2024
-    highlights:
-      - Provided DevOps and Platform engineering consulting for startups, focusing on Kubernetes migrations, CI/CD pipeline optimization, and infrastructure automation.
-  - role: Senior Platform Engineer
+      - Migrated manually maintained core Kubernetes components to GitOps management via Flux, decreasing upgrade times and ensuring a consistent config applied across 3+ Kubernetes clusters.
+      - Built real-time PostgreSQL-to-Snowflake replication using Snowflake Openflow across 50+ databases, replacing nightly batch ETL and reducing analytics data latency from hours or days to minutes for multiple teams.
+      - Instrumented multiple Kubernetes clusters with Prometheus monitoring stacks, Alertmanager alerts, and wired them into our incident response system for timely action via on-call for any production incidents.
+      - Supported ongoing efforts to comply with our SOC 2 policies and procedures.
+  - role: Senior DevOps Engineer
     company: Papa Inc, Miami, FL
-    period: Nov 2020 - Nov 2022
+    period: Nov 2020 - Feb 2023
     highlights:
-      - Built an Internal Developer Platform from scratch, reducing service deployment time from hours to under 15 minutes and enabling engineering teams to ship new services in a consistent and reliable manner.
-      - This included a chatops driven coordinator that interfaced with GitHub Actions, Amazon ECR, Amazon EKS, Docker Hub, Helm, and Kubernetes.
-  - role: Senior Lead Software Engineer
+      - Replaced a manual, error-prone deployment process with a custom Internal Developer Platform, powered by GitHub’s Deployments API, Slack, and Helm on top of AWS EKS, going from once-a-month manual deployments to 30+ times a day via automated deployments.
+      - Created a system that deployed isolated, per-branch/PR testing “review apps” on AWS EKS for engineering and QA to validate changes before deploying to production, reducing production incidents by 80%.
+      - Developed a system to produce scrubbed production data for use in QA and testing environments, providing confidence by using “production shaped” data, without exposing any PII or sensitive data.
+  - role: Senior Software Engineer
     company: StackShare, San Francisco, CA
     period: Aug 2016 - Oct 2020
     highlights:
-      - Owned all backend systems powering StackShare's frontend APIs and implemented GraphQL.
-      - Worked on scaling issues and refactoring technical debt as well as writing supporting apis for new feature development.
-      - Helped get our engineering team focused on performance.
-      - Managed all devops work, including infrastructure deployed on Heroku, DigitalOcean, AWS, and GCP, as well as Dockerized our application and maintained our CI systems.
-      - Handled alerting and management of 3 Kubernetes clusters running on GCP deployed via custom chatbot and helm charts as well as handling on-call incidents, stability, performance, and uptime issues, and managing outsourced consultants.
+      - Wrote backend APIs in REST and GraphQL for production features.
+      - Addressed scaling issues during times of high growth.
+      - Managed consultants and worked closely with product teams and frontend engineers to ensure product roadmap features worked as intended.
   - role: Senior Software Engineer
     company: GitLab Inc, San Francisco, CA
     period: Jan 2016 - Aug 2016
     highlights:
-      - Joined via acquisition of GitHost. Delivered product features and backend Rails and Postgres performance improvements to help scale gitlab.com as it hit explosive growth.
+      - Assisted with backend performance and PostgreSQL scaling issues during hypergrowth stages.
       - Contributed to the Gogs open source project.
+      - Joined via acquisition of GitHost, a personal side project that deployed managed GitLab instances and CI runners.
   - role: Founder
     company: GitHost, Brooklyn, NY
     period: Dec 2014 - Dec 2015
@@ -49,48 +40,41 @@ experience:
     company: HashiCorp, San Francisco, CA
     period: Jul 2014 - Jan 2015
     highlights:
-      - Collaborated on the development of Docker-integrated products and infrastructure automation tools during the company's foundational growth phase.
+      - Built out backend REST APIs for use in the “Atlas” cloud offering.
   - role: Senior Software Engineer
-    company: DigitalOcean Inc, New York, NY
+    company: DigitalOcean, Brooklyn, NY
     period: Aug 2013 - Jul 2014
     highlights:
-      - Worked on the backend VM scheduling system/hypervisor.
-      - Rebuilt the VM disk image generation system responsible for deploying VMs on DigitalOcean ("One-click deployments"), as well as the first version of their rest api written in Ruby.
-      - Wrote the first Android app for VM management before I was hired.
+      - Automated a golden master image generation system, powering the “one click install” feature of several popular open source projects on DigitalOcean’s cloud platform (WordPress, GitLab, MySQL, etc.)
+      - Designed and built REST APIs to power third-party integrations.
+      - Built the first-ever Android client for VM management.
   - role: Senior Software Engineer
     company: Etsy, Brooklyn, NY
     period: Nov 2011 - Aug 2013
     highlights:
-      - Served on the "Core" team as a performance specialist for a platform serving 95 million users.
-      - Refactored critical paths across the software stack to ensure page response times met strict SLAs, directly impacting user experience and conversion rates.
-  - role: Software Engineer
-    company: Wyred LLC, Columbus, OH
-    period: Sep 2010 - Nov 2011
-    highlights:
-      - Built backend APIs in PHP and MySQL to support the company's web and mobile applications.
-      - Managed deployments and resolved scaling problems.
+      - Served on the “Core” team as a performance specialist for a platform serving 95 million users.
+      - Refactored critical paths across the software stack to meet strict SLAs.
 skills:
-  - name: Infrastructure & Tools
+  - name: DevOps/Platform
     items:
-      - AWS, GCP, EKS, ECR, Terraform, Ansible, CDK, Azure
-      - Docker, Kubernetes, Helm, Containerd, Buildx, Multi-arch images
-      - Postgresql
-      - GitHub, GitLab, Nginx, Linux (Ubuntu, Debian, RedHat)
-  - name: Monitoring & Reliability
+      - GitOps
+      - AWS
+      - Terraform
+      - Kubernetes
+      - Helm
+      - Flux
+      - CDK
+      - IDP
+      - GitHub Actions
+      - Bash
+      - Python
+      - Loki
+  - name: Engineering
     items:
-      - Datadog, Service Mesh, Prometheus, Grafana, Alloy, Promtail, OpenTelemetry
-  - name: Disciplines
-    items:
-      - ChatOps, GitOps, Internal Developer Platforms
-  - name: Languages
-    items:
-      - Ruby, Elixir, Go, Python, Java, PHP, JavaScript, SQL, HCL
-projects:
-  - name: GitHost
-    tagline: Managed GitLab Hosting
-    url: https://githost.io/
-    description: Was handed off to GitLab and has since been shut down. Automated GitLab setup and upgrades, provisioned automatic SSL, preconfigured CI runners.
-  - name: RailsReady
-    tagline: Ruby and Rails setup script for Linux systems
-    url: https://github.com/joshfng/railsready
-    description: Now retired. Automated the cumbersome process of setting up Ruby on OSX years ago when it was incredibly difficult and error prone.
+      - Rails
+      - Python
+      - Go
+      - Postgres
+      - GraphQL
+      - Performance Scaling
+      - APIs
