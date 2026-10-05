@@ -1,0 +1,30 @@
+{% assign project = include.project %}
+{% capture lang_slugs %}{% for lang in project.languages %}{{ lang | slugify }} {% endfor %}{% endcapture %}
+<article class="post-item project-item" data-langs="{{ lang_slugs | strip }}">
+  <div class="project-head">
+    <h3><a href="{{ project.repo_url }}" rel="noopener">{{ project.title }}</a></h3>
+    <span class="project-meta">
+      <span title="stars">★ {{ project.stars }}</span>
+      <span title="last push">{{ project.date | date: "%b %Y" }}</span>
+    </span>
+  </div>
+
+  {% if project.description %}
+    <p>{{ project.description }}</p>
+  {% endif %}
+
+  {% if project.languages.size > 0 %}
+  <div class="tag-list">
+    {% for lang in project.languages %}
+      <a class="tag" href="{{ '/tags/' | relative_url }}{{ lang | slugify }}/">#{{ lang | downcase }}</a>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="project-links">
+    <a href="{{ project.repo_url }}" rel="noopener">github.com/{{ project.repo }} →</a>
+    {% if project.homepage %}
+      <a href="{{ project.homepage }}" rel="noopener">homepage →</a>
+    {% endif %}
+  </div>
+</article>

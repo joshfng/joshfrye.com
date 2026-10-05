@@ -1,0 +1,111 @@
+name: Josh Frye
+tagline: Senior Platform Engineer · Backend & Infrastructure
+github: github.com/joshfng
+linkedin: linkedin.com/in/joshfng
+summary: >-
+  Platform engineer with 15 years building developer platforms and cloud
+  infrastructure at Etsy, DigitalOcean, HashiCorp, GitLab, and startups.
+  Founded GitHost, acquired by GitLab.
+experience:
+  - role: Senior DevOps Engineer
+    company: Patriot Software, Canton, OH
+    period: May 2024 - Nov 2025
+    highlights:
+      - Moved core Kubernetes infrastructure across 3+ clusters from manual management to GitOps with Flux, AWS CDK, and GitHub Actions, eliminating configuration drift, reducing upgrade effort, and creating a single auditable configuration path.
+      - Designed and shipped real-time PostgreSQL logical replication into Snowflake via Snowflake Openflow across 50+ databases, reducing analytics data latency from hours or days to minutes for multiple downstream teams.
+      - Built cluster-wide monitoring and alerting with Prometheus, Grafana, Loki, Alertmanager, and OpenTelemetry and integrated it with on-call incident response so production failures page engineers immediately rather than being discovered by customers.
+      - Enforced pull-request-gated GitOps as the deployment path to production, producing a complete change audit trail and supporting SOC 2 compliance without additional reviewer burden.
+      - Maintained legacy revenue-generating services on Azure with IIS in parallel with the Kubernetes platform, keeping both stacks releasable while the org standardized on AWS.
+  - role: Senior Software Engineer
+    company: Frye Consulting, Canton, OH
+    period: Feb 2023 - May 2024
+    highlights:
+      - Provided DevOps and platform engineering consulting for startups, focused on Kubernetes migrations, CI/CD pipeline optimization, and infrastructure automation.
+  - role: Senior Platform Engineer
+    company: Papa Inc, Miami, FL
+    period: Nov 2020 - Feb 2023
+    highlights:
+      - Built an Internal Developer Platform from scratch using GitHub Deployments, Slack ChatOps, Helm, and AWS EKS, replacing monthly manual releases with 30+ automated deployments per day.
+      - Templated service provisioning through the platform, reducing time-to-first-deploy from hours to under 15 minutes and making service pipelines consistent and repeatable.
+      - Created per-PR review environments on EKS, giving QA isolated, fully functional environments for every pull request and reducing production incidents by 80%.
+      - Developed an automated data-scrubbing pipeline that produced production-shaped test datasets with sensitive fields removed, giving QA realistic data without exposing PII.
+      - Ran observability for the platform and its services on Datadog, Prometheus, Grafana, Loki, and OpenTelemetry, giving engineering teams shared metrics, logs, and traces for the services they shipped.
+  - role: Senior Software Engineer
+    company: StackShare, San Francisco, CA
+    period: Aug 2016 - Oct 2020
+    highlights:
+      - Owned backend systems powering StackShare’s product APIs, designing and shipping REST and GraphQL endpoints and introducing GraphQL to reduce over-fetching and unblock frontend development.
+      - Led performance and scalability work during a high-growth period, profiling and refactoring hot paths and database queries to restore headroom and make performance a team-wide priority.
+      - Single-handedly owned infrastructure across Heroku, DigitalOcean, AWS, and GCP, containerizing the application, maintaining CI, and running 3 Kubernetes clusters on GCP via Helm and a custom deployment chatbot.
+      - Established alerting and on-call practices and handled production incident response, driving platform uptime.
+  - role: Senior Software Engineer
+    company: GitLab Inc, San Francisco, CA
+    period: Jan 2016 - Aug 2016
+    highlights:
+      - Joined via GitLab’s acquisition of GitHost, a self-hosted GitLab hosting platform I founded and built solo.
+      - Delivered backend Rails and PostgreSQL performance improvements to critical paths as gitlab.com scaled through rapid growth, while also shipping customer-facing product features.
+  - role: Founder
+    company: GitHost, Brooklyn, NY
+    period: Dec 2014 - Dec 2015
+    highlights:
+      - Founded and built GitHost, a cloud platform that automated provisioning, upgrades, SSL, and preconfigured CI runners for private self-hosted GitLab instances.
+      - Ran the business solo across product, infrastructure, billing, and support until GitLab acquired the product in 2015.
+  - role: Senior Software Engineer
+    company: HashiCorp, San Francisco, CA
+    period: Jul 2014 - Jan 2015
+    highlights:
+      - Built backend REST APIs powering the Atlas cloud offering and collaborated on Docker-integrated products and infrastructure automation tooling during the company’s foundational growth phase.
+  - role: Senior Software Engineer
+    company: DigitalOcean, New York, NY
+    period: Aug 2013 - Jul 2014
+    highlights:
+      - Automated the golden-master image generation system behind DigitalOcean’s one-click application deployments, making stacks such as WordPress, GitLab, and MySQL deployable in a single click.
+      - Designed and built the first version of DigitalOcean’s public REST API in Ruby, opening the platform to third-party integrations.
+      - Worked on the backend VM scheduling and hypervisor layer responsible for placing and provisioning customer servers; previously built the first Android VM-management client as an outside project, which led to being hired.
+  - role: Senior Software Engineer
+    company: Etsy, Brooklyn, NY
+    period: Nov 2011 - Aug 2013
+    highlights:
+      - Served on the Core team as a performance specialist for a platform serving 95 million users.
+      - Profiled and refactored critical paths across the stack to bring page response times back within strict internal SLAs, improving user experience and conversion.
+skills:
+  - name: Platform & Infrastructure
+    items:
+      - AWS
+      - GCP
+      - Azure
+      - Kubernetes
+      - Helm
+      - Terraform
+      - CDK
+      - Flux/GitOps
+      - CI/CD
+      - GitHub Actions
+      - Docker
+      - Linux
+  - name: Backend & Data
+    items:
+      - Ruby/Rails
+      - Go
+      - Python
+      - PostgreSQL
+      - GraphQL
+      - REST APIs
+      - Snowflake
+      - Elixir
+      - PHP
+      - JavaScript
+      - SQL
+      - HCL
+  - name: Observability & Tools
+    items:
+      - Prometheus
+      - Grafana
+      - Alertmanager
+      - OpenTelemetry
+      - Datadog
+      - Loki
+      - Nginx
+      - GitHub
+      - GitLab
+      - Bash

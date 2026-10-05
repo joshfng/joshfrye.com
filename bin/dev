@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+echo "==> Verifying dependencies..."
+bundle check || bundle install
+
+echo "==> Starting Jekyll development server..."
+exec bundle exec jekyll serve --livereload --incremental --drafts

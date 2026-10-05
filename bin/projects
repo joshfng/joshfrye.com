@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  cat <<'USAGE'
+Usage: bin/projects [options]
+
+Regenerates the _projects collection from GitHub. Pulls every public,
+non-forked, non-archived repo owned by the user and writes one markdown
+stub per repo with its description, languages (as tags) and stats.
+
+Options:
+  --user <login>            GitHub login (default: authenticated gh user)
+  --limit <n>               Max repos to fetch (default: 200)
+  --exclude <a,b,c>         Repo names to skip (default: .github)
+  --min-language-share <f>  Drop languages below this share of bytes (default: 0.05)
+  --max-languages <n>       Max languages kept per repo (default: 6)
+  --dry-run                 Print what would be written, touch nothing
+  -h, --help                Show this help
+USAGE
+}
+
+USER_LOGIN=""
+LIMIT=200
+MIN_SHARE=0.05
+MAX_LANGS=6
+EXCLUDES='[".github"]'
+DRY_RUN=0
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --user) USER_LOGIN="$2"; shift 2 ;;
+    --limit) LIMIT="$2"; shift 2 ;;
+    --exclude) EXCLUDES=$(jq -cn --arg names "$2" '$names | split(",")'); shift 2 ;;
+    --min-language-share) MIN_SHARE="$2"; shift 2 ;;
+    --max-languages) MAX_LANGS="$2"; shift 2 ;;
+    --dry-run) DRY_RUN=1; shift ;;
+    -h|--help) usage; exit 0 ;;
+    *) echo "Unknown argument: $1" >&2; usage >&2; exit 1 ;;
+  esac
+done
+
+for dep in gh jq; do
+  if ! command -v "$dep" >/dev/null 2>&1; then
+    echo "Error: $dep is required but not installed." >&2
+    exit 1
+  fi
+done
+
+cd "$(dirname "$0")/.."
+
+if [ -z "$USER_LOGIN" ]; then
+  USER_LOGIN=$(gh api user --jq .login)
+fi
+
+echo "==> Fetching public, non-forked repos for ${USER_LOGIN}..."
+
+REPOS=$(gh repo list "$USER_LOGIN" \
+  --source \
+  --no-archived \
+  --visibility public \
+  --limit "$LIMIT" \
+  --json name,nameWithOwner,description,url,homepageUrl,primaryLanguage,languages,repositoryTopics,stargazerCount,forkCount,pushedAt,createdAt,isEmpty)
+
+RECORDS=$(jq \
+  --argjson excludes "$EXCLUDES" \
+  --argjson min_share "$MIN_SHARE" \
+  --argjson max_langs "$MAX_LANGS" '
+
+  def slug: ascii_downcase | gsub("[^a-z0-9]+"; "-") | sub("^-+"; "") | sub("-+$"; "");
+
+  def dedupe: reduce .[] as $item ([]; if index($item) then . else . + [$item] end);
+
+  def top_languages:
+    (.languages // []) as $langs
+    | ([$langs[].size] | add // 0) as $total
+    | ([$langs[] | select($total <= 0 or ((.size / $total) >= $min_share))]
+        | sort_by(-.size)
+        | map(.node.name)) as $ranked
+    | ((if .primaryLanguage then [.primaryLanguage.name] else [] end) + $ranked)
+    | dedupe
+    | .[0:$max_langs];
+
+  def yaml_list: if length == 0 then "[]" else (map(tojson) | "[" + join(", ") + "]") end;
+
+  def front_matter:
+    "---\n"
+    + "title: " + (.name | tojson) + "\n"
+    + "repo: " + (.nameWithOwner | tojson) + "\n"
+    + "repo_url: " + (.url | tojson) + "\n"
+    + (if (.homepageUrl // "") == "" then "" else "homepage: " + (.homepageUrl | tojson) + "\n" end)
+    + (if (.description // "") == "" then "" else "description: " + (.description | tojson) + "\n" end)
+    + "date: " + (.pushedAt | split("T")[0]) + "\n"
+    + "created: " + (.createdAt | split("T")[0]) + "\n"
+    + "rank: " + (.rank | tostring) + "\n"
+    + "stars: " + (.stargazerCount | tostring) + "\n"
+    + "forks: " + (.forkCount | tostring) + "\n"
+    + (if .primaryLanguage then "primary_language: " + (.primaryLanguage.name | tojson) + "\n" else "" end)
+    + "languages: " + (.langs | yaml_list) + "\n"
+    + "topics: " + ([(.repositoryTopics // [])[].name] | yaml_list) + "\n"
+    + "tags: " + (.langs | map(slug) | yaml_list) + "\n"
+    + "generated: true\n"
+    + "---\n";
+
+  [ .[]
+    | select(.isEmpty | not)
+    | select(.name as $name | ($excludes | index($name)) | not)
+    | . + { langs: top_languages }
+  ]
+  | sort_by(.pushedAt)
+  | reverse
+  | sort_by(-.stargazerCount)
+  | to_entries
+  | map(.value + { rank: .key })
+  | map({
+      filename: ((.name | slug) + ".md"),
+      name: .name,
+      content: (front_matter + "\n" + ((.description // "") + "\n"))
+    })
+' <<< "$REPOS")
+
+COUNT=$(jq 'length' <<< "$RECORDS")
+
+if [ "$DRY_RUN" -eq 1 ]; then
+  echo "==> Dry run, ${COUNT} project(s) would be written to _projects/:"
+  jq -r '.[] | "  _projects/" + .filename' <<< "$RECORDS"
+  exit 0
+fi
+
+mkdir -p _projects
+find _projects -maxdepth 1 -name '*.md' -delete
+
+for ((i = 0; i < COUNT; i++)); do
+  FILENAME=$(jq -r ".[$i].filename" <<< "$RECORDS")
+  jq -r ".[$i].content" <<< "$RECORDS" > "_projects/${FILENAME}"
+  echo "  wrote _projects/${FILENAME}"
+done
+
+echo "==> Generated ${COUNT} project(s) in _projects/"
+echo "Review with 'git status', then commit when ready."
