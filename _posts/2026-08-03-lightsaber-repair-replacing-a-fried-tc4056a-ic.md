@@ -79,3 +79,6 @@ are tedious and you're almost guaranteed to mess up a pad or bridge a pin, but
 it's pretty satisfying when the thing actually turns on at the end.
 
 ![The lightsaber fully repaired and lit up](/assets/images/posts/lightsaber-repair/frame_120_cropped.jpg)
+
+Watch the full repair in
+[this video]({% link _tweets/2026-08-03-you-know-what-they-say-when-there-s.md %}).
