@@ -12,7 +12,7 @@ experience:
     period: May 2024 - Nov 2025
     highlights:
       - Moved core Kubernetes infrastructure across 3+ clusters from manual management to GitOps with Flux, AWS CDK, and GitHub Actions, eliminating configuration drift, reducing upgrade effort, and creating a single auditable configuration path.
-      - Designed and shipped real-time PostgreSQL logical replication into Snowflake via Snowflake Openflow across 50+ databases, reducing analytics data latency from hours or days to minutes for multiple downstream teams.
+      - Migrated the data warehouse from AWS Redshift to Snowflake, designing and shipping real-time PostgreSQL logical replication via Snowflake Openflow across 50+ databases, reducing analytics data latency from hours or days to under 5 minutes for multiple downstream teams.
       - Built cluster-wide monitoring and alerting with Prometheus, Grafana, Loki, Alertmanager, and OpenTelemetry and integrated it with on-call incident response so production failures page engineers immediately rather than being discovered by customers.
       - Enforced pull-request-gated GitOps as the deployment path to production, producing a complete change audit trail and supporting SOC 2 compliance without additional reviewer burden.
       - Maintained legacy revenue-generating services on Azure with IIS in parallel with the Kubernetes platform, keeping both stacks releasable while the org standardized on AWS.
@@ -29,6 +29,7 @@ experience:
       - Templated service provisioning through the platform, reducing time-to-first-deploy from hours to under 15 minutes and making service pipelines consistent and repeatable.
       - Created per-PR review environments on EKS, giving QA isolated, fully functional environments for every pull request and reducing production incidents by 80%.
       - Developed an automated data-scrubbing pipeline that produced production-shaped test datasets with sensitive fields removed, giving QA realistic data without exposing PII.
+      - Built HIPAA controls into the platform (PII filtering, access control, audit logging) and automated a per-deploy audit bundle archived to S3 with what shipped and when, the work-request-to-completion trail, code and QA sign-offs, SAST/DAST and code-scanning results, and full deploy logs.
       - Ran observability for the platform and its services on Datadog, Prometheus, Grafana, Loki, and OpenTelemetry, giving engineering teams shared metrics, logs, and traces for the services they shipped.
   - role: Senior Software Engineer
     company: StackShare, San Francisco, CA
@@ -36,7 +37,7 @@ experience:
     highlights:
       - Owned backend systems powering StackShare’s product APIs, designing and shipping REST and GraphQL endpoints and introducing GraphQL to reduce over-fetching and unblock frontend development.
       - Led performance and scalability work during a high-growth period, profiling and refactoring hot paths and database queries to restore headroom and make performance a team-wide priority.
-      - Single-handedly owned infrastructure across Heroku, DigitalOcean, AWS, and GCP, containerizing the application, maintaining CI, and running 3 Kubernetes clusters on GCP via Helm and a custom deployment chatbot.
+      - Single-handedly owned infrastructure across Heroku, DigitalOcean, AWS, and GCP, containerizing the application, maintaining CI, and running 3 Kubernetes clusters on GCP with a Linkerd2 service mesh, deployed via Helm and a custom deployment chatbot, and supporting SOC 2 compliance.
       - Established alerting and on-call practices and handled production incident response, driving platform uptime.
   - role: Senior Software Engineer
     company: GitLab Inc, San Francisco, CA
@@ -76,6 +77,7 @@ skills:
       - Azure
       - Kubernetes
       - Helm
+      - Linkerd
       - Terraform
       - CDK
       - Flux/GitOps
@@ -89,9 +91,9 @@ skills:
       - Go
       - Python
       - PostgreSQL
+      - Snowflake
       - GraphQL
       - REST APIs
-      - Snowflake
       - Elixir
       - PHP
       - JavaScript
