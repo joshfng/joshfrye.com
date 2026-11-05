@@ -1,0 +1,51 @@
+---
+layout: base
+title: Blog
+---
+
+<div class="container section">
+  <header style="margin-bottom: var(--spacing-xl);">
+    <h1>Blog</h1>
+    <p style="color: var(--text-muted);">Thoughts on software, systems, and hardware.</p>
+  </header>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    {% assign categories = site.posts | map: 'categories' | flatten | uniq | sort %}
+    {% for category in categories %}
+      {% assign words = category | replace: '-', ' ' | split: ' ' %}
+      {% capture title_cased %}
+        {% for word in words %}{{ word | capitalize }} {% endfor %}
+      {% endcapture %}
+      <button class="filter-btn" data-filter="{{ category }}">{{ title_cased | strip }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="post-list" id="post-list">
+    {% for post in site.posts %}
+      <article class="post-item" data-categories="{{ post.categories | join: ' ' }}">
+        <span class="post-date">{{ post.date | date: "%B %d, %Y" }}</span>
+        <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+        <p>{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+      </article>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+(function () {
+  const btns = document.querySelectorAll('.filter-bar .filter-btn');
+  const items = document.querySelectorAll('#post-list .post-item');
+  btns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      const filter = this.dataset.filter;
+      btns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      items.forEach(item => {
+        const cats = (item.dataset.categories || '').split(' ');
+        item.style.display = (filter === 'all' || cats.includes(filter)) ? 'block' : 'none';
+      });
+    });
+  });
+})();
+</script>

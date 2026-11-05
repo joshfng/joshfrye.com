@@ -1,0 +1,28 @@
+.filter-bar {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+  margin-bottom: var(--spacing-xl);
+
+  .filter-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all $transition-speed;
+
+    &:hover {
+      border-color: var(--accent-color);
+      color: var(--accent-color);
+    }
+
+    &.active {
+      background-color: var(--accent-color);
+      border-color: var(--accent-color);
+      color: white;
+    }
+  }
+}

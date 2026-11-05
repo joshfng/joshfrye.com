@@ -1,0 +1,110 @@
+.cv-container {
+  max-width: var(--container-width);
+  margin: var(--spacing-xl) auto;
+  padding: 0 var(--spacing-md);
+  font-family: $font-mono;
+
+  header {
+    margin-bottom: var(--spacing-xl);
+    border-bottom: 1px dashed var(--border-color);
+    padding-bottom: var(--spacing-lg);
+    
+    h1 { 
+      margin-bottom: var(--spacing-xs);
+      color: var(--accent-color);
+      &::before { content: "whoami: "; opacity: 0.5; }
+    }
+    .contact-info {
+      display: flex;
+      gap: var(--spacing-md);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      
+      a { color: var(--text-muted); &:hover { color: var(--accent-color); } }
+    }
+  }
+
+  section {
+    margin-bottom: var(--spacing-xl);
+
+    h2 {
+      background: var(--code-bg);
+      display: inline-block;
+      padding: 2px 12px;
+      margin-bottom: var(--spacing-md);
+      font-size: 0.9rem;
+      color: var(--accent-color);
+      border: 1px solid var(--border-color);
+      text-transform: lowercase;
+      
+      &::before { content: "$ ls ./"; opacity: 0.5; }
+    }
+  }
+
+  .cv-item {
+    margin-bottom: var(--spacing-lg);
+    position: relative;
+    padding-left: var(--spacing-md);
+    border-left: 1px solid var(--border-color);
+
+    .cv-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--spacing-xs);
+
+      h3 { margin: 0; font-size: 1rem; color: var(--text-color); }
+      .date { color: var(--text-muted); font-size: 0.8rem; }
+    }
+
+    .role {
+      font-weight: 400;
+      color: var(--accent-color);
+      margin-bottom: var(--spacing-sm);
+      font-size: 0.9rem;
+      &::before { content: "role: "; opacity: 0.5; }
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      
+      li { 
+        margin-bottom: var(--spacing-xs);
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        &::before { content: "- "; color: var(--accent-color); }
+      }
+    }
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+
+    .skill-category {
+      h4 { 
+        margin-bottom: var(--spacing-xs); 
+        font-size: 0.9rem;
+        text-transform: lowercase;
+        &::before { content: "cat "; opacity: 0.5; }
+      }
+      ul { 
+        padding: 0; 
+        list-style: none; 
+        color: var(--text-muted); 
+        font-size: 0.85rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        
+        li {
+          background: var(--code-bg);
+          padding: 2px 6px;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+}
