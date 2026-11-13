@@ -1,0 +1,50 @@
+---
+layout: base
+title: Projects
+permalink: /projects/
+---
+
+{% assign projects = site.projects | sort: "rank" %}
+
+<div class="container section">
+  <header style="margin-bottom: var(--spacing-xl);">
+    <h1>Projects</h1>
+    <p style="color: var(--text-muted);">Public, open source repos on <a href="https://github.com/{{ site.social.github }}" rel="noopener">github.com/{{ site.social.github }}</a>.</p>
+  </header>
+
+  <div class="filter-bar" id="project-filter">
+    <button class="filter-btn active" data-lang="all">All</button>
+    {% assign langs = projects | map: 'languages' | compact | join: ',' | split: ',' | uniq | sort %}
+    {% for lang in langs %}
+      <button class="filter-btn" data-lang="{{ lang | slugify }}">{{ lang }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="post-list" id="project-list">
+    {% for project in projects %}
+      {% include project_item.html project=project %}
+    {% endfor %}
+  </div>
+
+  {% if projects.size == 0 %}
+    <p>No projects yet. Run <code>bin/projects</code> to generate them.</p>
+  {% endif %}
+</div>
+
+<script>
+(function () {
+  const btns = document.querySelectorAll('#project-filter .filter-btn');
+  const items = document.querySelectorAll('#project-list .project-item');
+  btns.forEach(btn => {
+    btn.addEventListener('click', function () {
+      const lang = this.dataset.lang;
+      btns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      items.forEach(item => {
+        const langs = (item.dataset.langs || '').split(' ');
+        item.style.display = (lang === 'all' || langs.includes(lang)) ? 'block' : 'none';
+      });
+    });
+  });
+})();
+</script>
